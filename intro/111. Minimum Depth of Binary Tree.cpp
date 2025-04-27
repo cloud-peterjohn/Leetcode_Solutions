@@ -27,7 +27,6 @@ public:
     {
         if (root == nullptr)
             return 0;
-        int min_leaf_depth = 999999;
         queue<State> q;
         q.push(State(root, 1));
         while (!q.empty())
@@ -42,15 +41,26 @@ public:
 
             if ((s.node->left == nullptr) && (s.node->right == nullptr))
             {
-                if (s.depth < min_leaf_depth)
-                    min_leaf_depth = s.depth;
+                // 层序遍历到的第一个结点就是最小深度的结点
+                return s.depth;
             }
         }
-        return min_leaf_depth;
+        return -1;
     }
 };
 
-// Implemented by DFS (每个结点保存一份depth))
+// Implemented by DFS (每个结点保存一份depth)
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution
 {
 public:
@@ -85,6 +95,17 @@ public:
 };
 
 // Implemented by DFS (类内全局变量：当前结点深度curr_depth和min_depth)
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution
 {
 public:
