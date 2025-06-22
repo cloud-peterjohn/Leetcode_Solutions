@@ -8,9 +8,6 @@ private:
     {
         for (int i = nums_begin_idx; i < nums.size(); ++i)
         {
-            // 避免重复数字
-            if (find(visited.begin(), visited.end(), nums[i]) != visited.end())
-                continue;
             // 回溯算法
             visited.push_back(nums[i]);
             track.push_back(nums[i]);
