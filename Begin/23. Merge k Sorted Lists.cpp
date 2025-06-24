@@ -11,6 +11,7 @@
  * };
  */
 
+ // 使用优先队列
 #include <algorithm>
 #include <vector>
 #include <queue>
@@ -49,5 +50,57 @@ public:
                 pq.push(node->next);
         }
         return _head.next;
+    }
+};
+
+// 使用分治法
+class Solution
+{
+private:
+    ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
+    {
+        ListNode *p1 = list1;
+        ListNode *p2 = list2;
+        ListNode *head = new ListNode();
+        ListNode *dummy_head = head;
+        while (p1 != nullptr && p2 != nullptr)
+        {
+            if (p1->val < p2->val)
+            {
+                head->next = p1;
+                head = head->next;
+                p1 = p1->next;
+            }
+            else
+            {
+                head->next = p2;
+                head = head->next;
+                p2 = p2->next;
+            }
+        }
+        if (p1 != nullptr)
+            head->next = p1;
+        if (p2 != nullptr)
+            head->next = p2;
+        return dummy_head->next;
+    }
+    ListNode *mergeKLists(vector<ListNode *> &lists, int begin, int end)
+    {
+        if (begin == end)
+            return lists[begin];
+        int mid = (begin + end) / 2;
+        ListNode *left = mergeKLists(lists, begin, mid);
+        ListNode *right = mergeKLists(lists, mid + 1, end);
+        return mergeTwoLists(left, right);
+    }
+
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists)
+    {
+        if (lists.empty())
+        {
+            return nullptr;
+        }
+        return mergeKLists(lists, 0, lists.size() - 1);
     }
 };
