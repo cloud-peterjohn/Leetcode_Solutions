@@ -7,13 +7,13 @@ public:
     {
         // dp_table[i, j]存储word1[i...]变为word2[j...]的编辑距离
         vector<vector<int>> dp_table(word1.size() + 1, vector<int>(word2.size() + 1, 0));
-        dp_table[word1.size()][word2.size()] = 0;
         // word2为空串，应对word1[i...]全部删除
         for (int i = 0; i < word1.size(); ++i)
             dp_table[i][word2.size()] = word1.size() - i;
         // word1为空串，应对word1全部插入word2[i...]
         for (int i = 0; i < word2.size(); ++i)
             dp_table[word1.size()][i] = word2.size() - i;
+        dp_table[word1.size()][word2.size()] = 0;
 
         // DP
         for (int i = word1.size() - 1; i >= 0; --i)
@@ -28,7 +28,6 @@ public:
                     dist4 = dp_table[i + 1][j + 1] + 0;
 
                 dp_table[i][j] = min({dist1, dist2, dist3, dist4});
-                cout << word1[i] << " " << word2[j] << " " << dp_table[i][j] << endl;
             }
         }
         return dp_table[0][0];
